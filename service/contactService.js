@@ -1,7 +1,6 @@
-const Contact = require("../models/Contact");
 const ContactNotFoundException = require("../exceptions/ContactNotFoundException");
 const PhoneAlreadyExistsException = require("../exceptions/PhoneAlreadyExistsException");
-const {getUserById} = require("./authService");
+const {sq} = require("../utils/database");
 
 async function createNewContact(contactRequest) {
     const firstname = contactRequest.firstname;
@@ -9,44 +8,59 @@ async function createNewContact(contactRequest) {
     const phoneNumber = contactRequest.phoneNumber;
     const userId = contactRequest.userId;
 
-    const contact = await Contact.findOne( { where: { phoneNumber: phoneNumber } } );
+    console.log(sq.models);
+    const contact = await sq.models.Contact.findOne( { where: { phoneNumber: phoneNumber, userId: userId } } );
     if (contact) {
         throw new PhoneAlreadyExistsException('You already have this phone number saved!');
     }
 
-    const savedContact = await Contact.create(
+    return await sq.models.Contact.create(
         {
             firstname: firstname,
             lastname: lastname,
-            phoneNumber: phoneNumber
+            phoneNumber: phoneNumber,
+            userId: userId
         }
     );
-    const contactOwner = getUserById(userId);
-    savedContact.setUser(contactOwner);
-    return savedContact;
 }
 
 
-async function findAllContactsForAUser() {
-
-}
-
-async function retrieveASingleContact(contactId) {
-
-}
-
-async function updateAContact(ownerEmail, otp) {
-    await VerificationOtp.create({
-        ownerEmail: ownerEmail,
-        otp: otp,
+async function findAllContactsForAUser(userId) {
+    console.log("userId", userId);
+    return await sq.models.Contact.findAndCountAll({
+        where: {
+            userId: userId,
+        },
     });
 }
 
-async function deleteAContact(contactId) {
-    await VerificationOtp.create({
-        ownerEmail: ownerEmail,
-        otp: otp,
+async function retrieveASingleContact(contactId, userId) {
+    const contact = await sq.models.Contact.findOne({
+        where: {
+            id: contactId,
+            userId: userId,
+        },
     });
+    if (!contact) {
+        throw new ContactNotFoundException("Contact not found!");
+    }
+    return contact;
+}
+
+async function updateAContact(updateContactRequest, userId) {
+    const contactId = updateContactRequest.id;
+    const foundContact = retrieveASingleContact(contactId, userId);
+    foundContact.firstname = updateContactRequest.firstname;
+    foundContact.lastname = updateContactRequest.lastname;
+    foundContact.phoneNumber = updateContactRequest.phoneNumber;
+    foundContact.save();
+    return foundContact;
+}
+
+async function deleteAContact(contactId, userId) {
+    const foundContact = retrieveASingleContact(contactId, userId);
+    foundContact.destroy();
+    return "SUCCESSFUL";
 }
 
 module.exports = {

@@ -1,44 +1,43 @@
-const { DataTypes } = require("sequelize");
-const { sq } = require("../utils/database");
-const User = require("./User");
+"use strict";
+const {Model, DataTypes} = require("sequelize");
+const {sq} = require("../utils/database");
 
-const Contact = sq.define('Contact', {
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-    },
-    firstname: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    lastname: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    phoneNumber: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-    },
-    createdAt: {
-        type: DataTypes.DATE,
-        defaultValue: sq.literal('CURRENT_TIMESTAMP'),
-    },
-    updatedAt: {
-        type: DataTypes.DATE,
-        defaultValue: sq.literal('CURRENT_TIMESTAMP'),
-    },
-});
+class Contact extends Model {
+}
 
-Contact.belongsTo(User);
-
-sq.sync()
-    .then(() => {
-        console.log('Contacts model synced with the database');
-    })
-    .catch((error) => {
-        console.error('Error syncing User model:', error);
-    });
+Contact.init(
+    {
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+        },
+        firstname: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        lastname: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        phoneNumber: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: false,
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            defaultValue: sq.literal('CURRENT_TIMESTAMP'),
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            defaultValue: sq.literal('CURRENT_TIMESTAMP'),
+        },
+    },
+    {
+        sequelize: sq,
+        modelName: "Contact"
+    }
+);
 
 module.exports = Contact;

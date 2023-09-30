@@ -3,12 +3,12 @@ const jwt = require('jsonwebtoken');
 const dotenv = require("dotenv");
 const otpGenerator = require('otp-generator');
 const transporter = require('../utils/emailConfig');
-const User = require("../models/User");
 const EmailAlreadyExistsException = require("../exceptions/EmailAlreadyExistsException");
 const VerificationOtp = require("../models/VerificationOtp");
 const UserNotFoundException = require("../exceptions/UserNotFoundException");
 const IncorrectPasswordException = require("../exceptions/IncorrectPasswordException");
 const InvalidOtpException = require("../exceptions/InvalidOtpException");
+const {sq} = require("../utils/database");
 
 dotenv.config();
 const hostUrl = process.env.EXTERNAL_URL;
@@ -19,16 +19,18 @@ async function createNewUser(signupRequest) {
     const username = signupRequest.username;
     const password = signupRequest.password;
 
-    const user = await User.findOne( { where: { email: email } } );
+    console.log(sq.models);
+
+    const user = await sq.models.Users.findOne( { where: { email: email } } );
     if (user) {
         throw new EmailAlreadyExistsException('This email is already registered!');
     }
-    const usernameFound = await User.findOne( { where: { username: username } });
+    const usernameFound = await sq.models.Users.findOne( { where: { username: username } });
     if (usernameFound) {
         throw new EmailAlreadyExistsException('This username is already taken!');
     }
 
-    const newUser = await User.create(
+    const newUser = await sq.models.Users.create(
         {
             email: email,
             password: await bcrypt.hash(password, 10),
@@ -65,6 +67,8 @@ async function createNewUser(signupRequest) {
             console.log('Email sent:', info.response);
         }
     });
+    const secretKey = process.env.JWT_SECRET;
+    newUser['token'] = jwt.sign({user: user}, secretKey, {expiresIn: '24h'});
     return newUser;
 }
 
@@ -73,7 +77,7 @@ async function loginUser(loginRequest) {
     const email = loginRequest.email;
     const password = loginRequest.password;
 
-    const user = await User.findOne( { where: { email: email } } );
+    const user = await sq.models.Users.findOne( { where: { email: email } } );
 
     if (!user) {
         throw new UserNotFoundException('User not found!');
@@ -89,22 +93,14 @@ async function loginUser(loginRequest) {
 }
 
 
-async function getUserById(userId) {
-    const user = await User.findOne( { where: { id: userId } } );
-    if (!user) {
-        throw new UserNotFoundException('User not found!');
-    }
-    return user;
-}
-
 async function verifyUser(otp) {
-    const foundOtp = await VerificationOtp.findOne({ where: { otp: otp } });
+    const foundOtp = await sq.models.VerificationOtp.findOne({ where: { otp: otp } });
     if (foundOtp === null) {
         throw new InvalidOtpException('Invalid or expired OTP.');
     }
 
     const email = foundOtp.ownerEmail;
-    const user = await User.findOne({ where: { email: email } });
+    const user = await sq.models.User.findOne({ where: { email: email } });
     if (user === null) {
         throw new UserNotFoundException('User not registered!');
     }
@@ -144,6 +140,5 @@ async function storeOTPInDatabase(ownerEmail, otp) {
 module.exports = {
     createNewUser,
     loginUser,
-    verifyUser,
-    getUserById
+    verifyUser
 }

@@ -11,7 +11,8 @@ authRouter.post('/signup', async (req, res, next) => {
             id: createdUser.id,
             username: createdUser.username,
             createdAt: createdUser.createdAt,
-            isVerified: createdUser.isVerified
+            isVerified: createdUser.isVerified,
+            token: createdUser.token
         }
         res.status(201).json({ message: 'User registered successfully', createdUser: createUserResponse });
     } catch (error) {
@@ -33,8 +34,8 @@ authRouter.post('/login', async (req, res, next) => {
 authRouter.post('/verify/:otp', async (req, res, next) => {
     try {
         const otp = req.params.otp;
-        const token = await verifyUser(otp);
-        res.status(200).json({ message: 'User verified successfully', token: token });
+        await verifyUser(otp);
+        res.status(200).json({ message: 'User verified successfully' });
     } catch (error) {
         next(error);
     }
