@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "bbacde60-b183-4ffb-a374-5c60441bcc1a",
 		"name": "Contacts Management Application",
-		"description": "# API that serves as a Contacts Management System\n\n## Tools/Stack used:\n\n- Node.Js (Javascript and Express)\n- Postgres\n- Postman\n    \n\n## GitHub Repository:\n\n- [Contacts App](https://github.com/RevEmmanuel/hux-backend-assessment/)\n    \n\n## Documentation:\n\n- [Postman Documentation](https://documenter.getpostman.com/view/24879226/2s9Y5Wvhvw)\n    \n\n## Functionalities:\n\n- Users can create an account\n- Users can create a new contact\n- Users can retrieve a list of contacts\n- Users can retrieve a single contact\n- Users can update a contact\n- Users can delete a contact",
+		"description": "# API that serves as a Contacts Management System\n\n## Tools/Stack used:\n\n- Node.Js (Javascript and Express)\n- Postgres\n- Postman\n    \n\n## GitHub Repository:\n\n- [Contacts App](https://github.com/RevEmmanuel/hux-backend-assessment/)\n    \n\n## Documentation:\n\n- [Postman Documentation](https://documenter.getpostman.com/view/24879226/2s9YJaZ4ZS)\n    \n\n## Functionalities:\n\n- Users can create an account\n- Users can create a new contact\n- Users can retrieve a list of contacts\n- Users can retrieve a single contact\n- Users can update a contact\n- Users can delete a contact",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "24879226",
 		"_collection_link": "https://www.postman.com/revemmanuel/workspace/my-public-workspace/collection/24879226-bbacde60-b183-4ffb-a374-5c60441bcc1a?action=share&source=collection_link&creator=24879226"
@@ -21,7 +21,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"dagnozufyo@gufum.com\",\r\n    \"password\": \"password\",\r\n    \"username\": \"Test User\"\r\n}\r\n",
+							"raw": "{\r\n    \"email\": \"lortiyopso@gufum.com\",\r\n    \"password\": \"password\",\r\n    \"username\": \"Test User 2\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -266,6 +266,9 @@
 				{
 					"name": "Verify User",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -277,7 +280,7 @@
 								}
 							}
 						},
-						"url": "{{base-url}}/auth/verify/nclQtkSqOZRR"
+						"url": "{{base-url}}/auth/verify/ONkLNLOkFAwl"
 					},
 					"response": [
 						{
@@ -1036,13 +1039,6 @@
 					""
 				]
 			}
-		}
-	],
-	"variable": [
-		{
-			"key": "dev-server",
-			"value": "https://hux-assessment-backend-production.up.railway.app",
-			"type": "string"
 		}
 	]
 }
