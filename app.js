@@ -35,7 +35,7 @@ app.get('/auth/current-user', authVerification ,async (req, res, next) => {
     }
 });
 
-app.use('/contact', authVerification, contactRouter)
+app.use('/contacts', authVerification, contactRouter)
 
 app.post('/logout', (req, res) => {
     const token = req.headers.authorization;

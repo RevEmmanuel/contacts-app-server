@@ -94,13 +94,13 @@ async function loginUser(loginRequest) {
 
 
 async function verifyUser(otp) {
-    const foundOtp = await sq.models.VerificationOtp.findOne({ where: { otp: otp } });
+    const foundOtp = await VerificationOtp.findOne({ where: { otp: otp } });
     if (foundOtp === null) {
         throw new InvalidOtpException('Invalid or expired OTP.');
     }
 
     const email = foundOtp.ownerEmail;
-    const user = await sq.models.User.findOne({ where: { email: email } });
+    const user = await sq.models.Users.findOne({ where: { email: email } });
     if (user === null) {
         throw new UserNotFoundException('User not registered!');
     }

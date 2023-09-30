@@ -23,7 +23,7 @@ contactRouter.post('/create', async (req, res, next) => {
 contactRouter.get('/all', async (req, res, next) => {
     try {
         const foundContacts = await findAllContactsForAUser(req.user.id);
-        res.status(200).json({ message: 'Contact created successfully', contacts: foundContacts });
+        res.status(200).json({ contacts: foundContacts });
     } catch (error) {
         next(error);
     }
@@ -39,7 +39,7 @@ contactRouter.get('/:id', async (req, res, next) => {
             lastname: foundContact.lastname,
             phoneNumber: foundContact.phoneNumber
         }
-        res.status(200).json({ message: 'Contact created successfully', contact: findContactResponse });
+        res.status(200).json({ contact: findContactResponse });
     } catch (error) {
         next(error);
     }
@@ -51,7 +51,13 @@ contactRouter.put('/:id', async (req, res, next) => {
         const requestBody = req.body;
         requestBody['id'] = id;
         const result = await updateAContact(requestBody, req.user.id);
-        res.status(200).json({ message: 'Contact Updated Successfully', contact: result });
+        const findContactResponse = {
+            id: result.id,
+            firstname: result.firstname,
+            lastname: result.lastname,
+            phoneNumber: result.phoneNumber
+        }
+        res.status(200).json({ contact: findContactResponse });
     } catch (error) {
         next(error);
     }

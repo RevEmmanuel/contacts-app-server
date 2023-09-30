@@ -1,0 +1,1048 @@
+{
+	"info": {
+		"_postman_id": "bbacde60-b183-4ffb-a374-5c60441bcc1a",
+		"name": "Contacts Management Application",
+		"description": "# API that serves as a Contacts Management System\n\n## Tools/Stack used:\n\n- Node.Js (Javascript and Express)\n- Postgres\n- Postman\n    \n\n## GitHub Repository:\n\n- [Contacts App](https://github.com/RevEmmanuel/hux-backend-assessment/)\n    \n\n## Documentation:\n\n- [Postman Documentation](https://documenter.getpostman.com/view/24879226/2s9Y5Wvhvw)\n    \n\n## Functionalities:\n\n- Users can create an account\n- Users can create a new contact\n- Users can retrieve a list of contacts\n- Users can retrieve a single contact\n- Users can update a contact\n- Users can delete a contact",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "24879226",
+		"_collection_link": "https://www.postman.com/revemmanuel/workspace/my-public-workspace/collection/24879226-bbacde60-b183-4ffb-a374-5c60441bcc1a?action=share&source=collection_link&creator=24879226"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "User Signup",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"dagnozufyo@gufum.com\",\r\n    \"password\": \"password\",\r\n    \"username\": \"Test User\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base-url}}/auth/signup"
+					},
+					"response": [
+						{
+							"name": "User Created Successfully",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"dagnozufyo@gufum.com\",\r\n    \"password\": \"password\",\r\n    \"username\": \"Test User\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:3000/auth/signup"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "301"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"12d-RO4T5Wp8LIill/hU/THWFRLMMjw\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 30 Sep 2023 22:27:47 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User registered successfully\",\n    \"createdUser\": {\n        \"id\": 4,\n        \"username\": \"Test User\",\n        \"createdAt\": \"2023-09-30T22:27:47.487Z\",\n        \"isVerified\": false,\n        \"token\": \"string\"\n    }\n}"
+						},
+						{
+							"name": "Email Already Registered Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"dagnozufyo@gufum.com\",\r\n    \"password\": \"password\",\r\n    \"username\": \"Test User\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:3000/auth/signup"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "47"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2f-ITEoQkk5avFNMBzovwyiWxzDIoc\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 30 Sep 2023 22:30:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"This email is already registered!\"\n}"
+						}
+					]
+				},
+				{
+					"name": "User Login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"dagnozufyo@gufum.com\",\r\n    \"password\": \"password\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base-url}}/auth/login"
+					},
+					"response": [
+						{
+							"name": "Login Successful",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"dagnozufyo@gufum.com\",\r\n    \"password\": \"password\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-url}}/auth/login"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "484"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1e4-j2oz2FXeYQkguErIXw2z1LZMzMU\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 30 Sep 2023 22:36:07 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"token\": \"string\"\n}"
+						},
+						{
+							"name": "Incorrect Password Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"dagnozufyo@gufum.com\",\r\n    \"password\": \"password123\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-url}}/auth/login"
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "33"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"21-bnFxfIO4SkQVjFbrqmFkoMoJHeU\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 30 Sep 2023 22:37:54 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Incorrect Password!\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Verify User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base-url}}/auth/verify/nclQtkSqOZRR"
+					},
+					"response": [
+						{
+							"name": "User Verification Successful",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-url}}/auth/verify/nclQtkSqOZRR"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "40"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"28-rKdPRlEMTZlS4i2bfvwTr8oxlGw\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 30 Sep 2023 22:47:42 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User verified successfully\"\n}"
+						},
+						{
+							"name": "Invalid Otp Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-url}}/auth/verify/nclQtkSqOZRR"
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "37"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"25-Q5LZAsKIP3FmwP8FQtQb26pFq9I\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 30 Sep 2023 22:48:00 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Invalid or expired OTP.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Current User",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base-url}}/auth/current-user"
+					},
+					"response": [
+						{
+							"name": "Get Current User Successful",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-url}}/auth/current-user"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "105"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"69-ZhLDIueaxMv6k1kbnShJjt70eqw\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 30 Sep 2023 22:50:34 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"currentUser\": {\n        \"id\": 4,\n        \"username\": \"Test User\",\n        \"createdAt\": \"2023-09-30T22:27:47.487Z\",\n        \"isVerified\": false\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Contacts",
+			"item": [
+				{
+					"name": "Create New Contact",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\": \"John\",\r\n    \"lastname\": \"Doe\",\r\n    \"phoneNumber\": \"08103078883\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base-url}}/contacts/create"
+					},
+					"response": [
+						{
+							"name": "Create Contact Successful",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstname\": \"John\",\r\n    \"lastname\": \"Doe\",\r\n    \"phoneNumber\": \"08103078881\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-url}}/contacts/create"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "132"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"84-hRLKJZOGNZft4aiSzIQxkAogVwE\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 30 Sep 2023 22:53:25 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Contact created successfully\",\n    \"createdContact\": {\n        \"id\": 9,\n        \"firstname\": \"John\",\n        \"lastname\": \"Doe\",\n        \"phoneNumber\": \"08103078881\"\n    }\n}"
+						},
+						{
+							"name": "Duplicate Phone number Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstname\": \"John\",\r\n    \"lastname\": \"Doe\",\r\n    \"phoneNumber\": \"08103078881\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-url}}/contacts/create"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "55"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"37-FsOyEZ2s/zdwImh+YDsRWVpiHns\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 30 Sep 2023 22:54:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"You already have this phone number saved!\"\n}"
+						},
+						{
+							"name": "Create New Contact",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstname\": \"John\",\r\n    \"lastname\": \"Doe\",\r\n    \"phoneNumber\": \"08103078882\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-url}}/contacts/create"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "133"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"85-ilK8CN0gdxM+V2yV6RgILXRdJEU\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 30 Sep 2023 22:56:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Contact created successfully\",\n    \"createdContact\": {\n        \"id\": 10,\n        \"firstname\": \"John\",\n        \"lastname\": \"Doe\",\n        \"phoneNumber\": \"08103078882\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get All Contacts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{base-url}}/contacts/all"
+					},
+					"response": [
+						{
+							"name": "Get All Contacts Successful",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "{{base-url}}/contacts/all"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "358"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"166-6u7l4vHTobHzGzFwzgS0bvm/kKQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 30 Sep 2023 22:57:53 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"contacts\": {\n        \"count\": 2,\n        \"rows\": [\n            {\n                \"id\": 9,\n                \"firstname\": \"John\",\n                \"lastname\": \"Doe\",\n                \"phoneNumber\": \"08103078881\",\n                \"createdAt\": \"2023-09-30T22:53:25.599Z\",\n                \"updatedAt\": \"2023-09-30T22:53:25.599Z\",\n                \"userId\": 4\n            },\n            {\n                \"id\": 10,\n                \"firstname\": \"John\",\n                \"lastname\": \"Doe\",\n                \"phoneNumber\": \"08103078882\",\n                \"createdAt\": \"2023-09-30T22:56:23.774Z\",\n                \"updatedAt\": \"2023-09-30T22:56:23.774Z\",\n                \"userId\": 4\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get A Contact By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{base-url}}/contacts/10"
+					},
+					"response": [
+						{
+							"name": "Found Contact Successfully",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "{{base-url}}/contacts/10"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "85"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"55-KKUv52AYYsEhqh1mzrlo1+Sm0NA\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 30 Sep 2023 22:59:33 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"contact\": {\n        \"id\": 10,\n        \"firstname\": \"John\",\n        \"lastname\": \"Doe\",\n        \"phoneNumber\": \"08103078882\"\n    }\n}"
+						},
+						{
+							"name": "Contact Not Found Error",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "{{base-url}}/contacts/18"
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "32"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"20-XQrjTcOHdQxlBlork486A9zCPMo\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 30 Sep 2023 22:59:53 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Contact not found!\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Contact",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{base-url}}/contacts/9"
+					},
+					"response": [
+						{
+							"name": "Delete Contact Successful",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": "{{base-url}}/contacts/9"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "24"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"18-twJr8V201pFGmr1JzeoW9+55Xww\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 30 Sep 2023 23:01:59 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"SUCCESSFUL\"\n}"
+						},
+						{
+							"name": "Cannot Delete Already Deleted Contact",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": "{{base-url}}/contacts/9"
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "32"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"20-XQrjTcOHdQxlBlork486A9zCPMo\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 30 Sep 2023 23:02:12 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Contact not found!\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Contact",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\": \"Ade\",\r\n    \"lastname\": \"Adeee\",\r\n    \"phoneNumber\": \"08103078883\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base-url}}/contacts/10"
+					},
+					"response": [
+						{
+							"name": "Contact Updated Successfully",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstname\": \"Ade\",\r\n    \"lastname\": \"Adeee\",\r\n    \"phoneNumber\": \"08103088881\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-url}}/contacts/10"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "176"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"b0-kQwMPfLFPd3NApfq7TltoHdhlzQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 30 Sep 2023 23:03:50 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"contact\": {\n        \"id\": 10,\n        \"firstname\": \"Ade\",\n        \"lastname\": \"Adeee\",\n        \"phoneNumber\": \"08103088881\",\n        \"createdAt\": \"2023-09-30T22:56:23.774Z\",\n        \"updatedAt\": {\n            \"val\": \"CURRENT_TIMESTAMP\"\n        },\n        \"userId\": 4\n    }\n}"
+						},
+						{
+							"name": "Cannot Update Phone Number with an Already existing Number",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstname\": \"Ade\",\r\n    \"lastname\": \"Adeee\",\r\n    \"phoneNumber\": \"08103078883\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base-url}}/contacts/10"
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "55"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"37-FsOyEZ2s/zdwImh+YDsRWVpiHns\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 30 Sep 2023 23:06:58 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"You already have this phone number saved!\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Folder for all CRUD operations for Contacts Entity."
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": {
+			"token": "{{auth-token}}"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "dev-server",
+			"value": "https://hux-assessment-backend-production.up.railway.app",
+			"type": "string"
+		}
+	]
+}
