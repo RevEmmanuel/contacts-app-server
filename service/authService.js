@@ -19,8 +19,6 @@ async function createNewUser(signupRequest) {
     const username = signupRequest.username;
     const password = signupRequest.password;
 
-    console.log(sq.models);
-
     const user = await sq.models.Users.findOne( { where: { email: email } } );
     if (user) {
         throw new EmailAlreadyExistsException('This email is already registered!');
