@@ -12,7 +12,14 @@ const authRouter = require("./routes/auth");
 const contactRouter = require("./routes/contact");
 const port = process.env.PORT || 3000;
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
+
 app.use(express.json());
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJsdoc({
+    swaggerDefinition: require('./swagger.json'),
+})));
 
 app.get('/', (req, res) => {
     res.send('Hello, Express!');
