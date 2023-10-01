@@ -54,7 +54,7 @@ contactRouter.get('/:id', async (req, res, next) => {
             lastname: foundContact.lastname,
             phoneNumber: foundContact.phoneNumber
         }
-        res.status(200).json({ contact: findContactResponse });
+        res.status(200).json(findContactResponse);
     } catch (error) {
         next(error);
     }
@@ -76,7 +76,7 @@ contactRouter.put('/:id', async (req, res, next) => {
             lastname: result.lastname,
             phoneNumber: result.phoneNumber
         }
-        res.status(200).json({ contact: findContactResponse });
+        res.status(200).json(findContactResponse);
     } catch (error) {
         next(error);
     }
