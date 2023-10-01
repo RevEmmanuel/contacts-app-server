@@ -67,11 +67,6 @@ async function updateAContact(updateContactRequest, userId) {
     foundContact.firstname = updateContactRequest.firstname;
     foundContact.lastname = updateContactRequest.lastname;
 
-    const contact = await sq.models.Contact.findOne( { where: { phoneNumber: updateContactRequest.phoneNumber, userId: userId } } );
-    if (contact) {
-        throw new PhoneAlreadyExistsException('You already have this phone number saved!');
-    }
-
     foundContact.phoneNumber = updateContactRequest.phoneNumber;
     foundContact.save();
     return foundContact;
