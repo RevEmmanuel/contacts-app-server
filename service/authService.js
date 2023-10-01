@@ -51,11 +51,11 @@ async function createNewUser(signupRequest) {
         <p>We're glad to have you!</p>
         
         <p>Please click the link below to verify your account:</p>
-        <a href="${hostUrl}/verify/${otp}" target="_blank">Verify my account</a>
+        <a href="${hostUrl}/auth/verify/${otp}" target="_blank">Verify my account</a>
         <br />
         <br />
         <p>If that doesn't work, copy the link below and paste in your browser:</p>
-        <p>${hostUrl}/verify/${otp}</p>
+        <p>${hostUrl}/auth/verify/${otp}</p>
         `
     };
 
