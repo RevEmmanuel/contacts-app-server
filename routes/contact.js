@@ -35,7 +35,7 @@ contactRouter.post('/create', async (req, res, next) => {
 contactRouter.get('/all', async (req, res, next) => {
     try {
         const foundContacts = await findAllContactsForAUser(req.user.id);
-        res.status(200).json({ contacts: foundContacts });
+        res.status(200).json(foundContacts);
     } catch (error) {
         next(error);
     }
