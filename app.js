@@ -5,6 +5,7 @@ module.exports = { tokenBlackList };
 // -------------------------
 
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const globalExceptionHandler = require("./exceptions/GlobalExceptionHandler")
 const authVerification = require("./middleware/authVerification");
@@ -13,6 +14,14 @@ const contactRouter = require("./routes/contact");
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
+
+const corsOptions = {
+    origin: ['*'],
+    optionsSuccessStatus: 200,
+    methods: "GET, POST, PUT, DELETE",
+}
+
+app.use(cors(corsOptions));
 
 app.get('/', (req, res) => {
     res.send('Hello, Express!');
