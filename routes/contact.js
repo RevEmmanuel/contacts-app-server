@@ -15,9 +15,9 @@ const createContactRequest = yup.object().shape({
 
 
 contactRouter.post('/create', async (req, res, next) => {
-    let requestBody = req.body;
-    await createContactRequest.validate(requestBody);
     try {
+        let requestBody = req.body;
+        await createContactRequest.validate(requestBody);
         requestBody['userId'] = req.user.id;
         const createdContact = await createNewContact(requestBody);
         const createContactResponse = {
@@ -61,9 +61,9 @@ contactRouter.get('/:id', async (req, res, next) => {
 });
 
 contactRouter.put('/:id', async (req, res, next) => {
-    let requestBody = req.body;
-    await createContactRequest.validate(requestBody);
     try {
+        let requestBody = req.body;
+        await createContactRequest.validate(requestBody);
         const id = req.params.id
         if (!id) {
             throw new UnauthorizedException('Please provide an id');

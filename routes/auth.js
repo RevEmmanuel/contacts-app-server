@@ -18,9 +18,9 @@ const loginRequest = yup.object().shape({
 });
 
 authRouter.post('/signup', async (req, res, next) => {
-    const requestBody = req.body;
-    await createUserRequest.validate(requestBody);
     try {
+        const requestBody = req.body;
+        await createUserRequest.validate(requestBody);
         const createdUser = await createNewUser(requestBody);
         const createUserResponse = {
             id: createdUser.id,
@@ -36,9 +36,9 @@ authRouter.post('/signup', async (req, res, next) => {
 });
 
 authRouter.post('/login', async (req, res, next) => {
-    const loginDto = req.body;
-    await loginRequest.validate(loginDto);
     try {
+        const loginDto = req.body;
+        await loginRequest.validate(loginDto);
         const token = await loginUser(loginDto);
         res.status(200).json({ token });
     } catch (error) {
