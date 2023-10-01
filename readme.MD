@@ -83,6 +83,8 @@ This project is currently hosted on railway.
 
 ## Documentation
 [Postman Documentation](https://documenter.getpostman.com/view/24879226/2s9YJaZ4ZS)
+[Deployed Website URL](https://hux-assessment-frontend.vercel.app/)
+[Frontend GitHub Repository](https://github.com/RevEmmanuel/hux-assessment-frontend)
 
 ## Developer & Engineer
 Adeola Adekunle
