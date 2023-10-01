@@ -46,7 +46,7 @@ authRouter.post('/login', async (req, res, next) => {
     }
 })
 
-authRouter.post('/verify/:otp', async (req, res, next) => {
+authRouter.get('/verify/:otp', async (req, res, next) => {
     try {
         const otp = req.params.otp;
         if (!otp) {
