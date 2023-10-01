@@ -9,6 +9,7 @@ const UserNotFoundException = require("../exceptions/UserNotFoundException");
 const IncorrectPasswordException = require("../exceptions/IncorrectPasswordException");
 const InvalidOtpException = require("../exceptions/InvalidOtpException");
 const {sq} = require("../utils/database");
+const UsernameAlreadyExistsException = require("../exceptions/UsernameAlreadyExistsException");
 
 dotenv.config();
 const hostUrl = process.env.EXTERNAL_URL;
@@ -25,7 +26,7 @@ async function createNewUser(signupRequest) {
     }
     const usernameFound = await sq.models.Users.findOne( { where: { username: username } });
     if (usernameFound) {
-        throw new EmailAlreadyExistsException('This username is already taken!');
+        throw new UsernameAlreadyExistsException('This username is already taken!');
     }
 
     const newUser = await sq.models.Users.create(
