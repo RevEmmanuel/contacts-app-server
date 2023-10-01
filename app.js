@@ -25,11 +25,9 @@ app.get('/auth/current-user', authVerification ,async (req, res, next) => {
         const user = req.user;
         const currentUser = {
             id: user.id,
-            username: user.username,
-            createdAt: user.createdAt,
-            isVerified: user.isVerified
+            username: user.username
         }
-        res.status(200).json({ currentUser });
+        res.status(200).json(currentUser);
     } catch (error) {
         next(error);
     }

@@ -2,6 +2,7 @@ const {createNewUser, loginUser} = require("../service/authService");
 const {sq} = require("../utils/database");
 const Contact = require("../models/Contact")
 const User = require("../models/User");
+const VerificationOtp = require("../models/VerificationOtp");
 const EmailAlreadyExistsException = require("../exceptions/EmailAlreadyExistsException");
 const UsernameAlreadyExistsException = require("../exceptions/UsernameAlreadyExistsException");
 const IncorrectPasswordException = require("../exceptions/IncorrectPasswordException");

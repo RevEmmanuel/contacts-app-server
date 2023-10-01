@@ -136,8 +136,17 @@ async function storeOTPInDatabase(ownerEmail, otp) {
     });
 }
 
+async function checkIfUserExists(userId) {
+    const user = await sq.models.Users.findOne( { where: { id: userId } } );
+    if (!user) {
+        return false; // user does not exist
+    }
+    return true; // user exists
+}
+
 module.exports = {
     createNewUser,
     loginUser,
-    verifyUser
+    verifyUser,
+    checkIfUserExists
 }

@@ -1,12 +1,12 @@
+const {createNewUser} = require("../service/authService");
+const {createNewContact, updateAContact, retrieveASingleContact, deleteAContact} = require("../service/contactService");
 const {sq} = require("../utils/database");
 const Contact = require("../models/Contact")
 const User = require("../models/User");
-const {createNewUser, loginUser} = require("../service/authService");
-const EmailAlreadyExistsException = require("../exceptions/EmailAlreadyExistsException");
-const UsernameAlreadyExistsException = require("../exceptions/UsernameAlreadyExistsException");
-const IncorrectPasswordException = require("../exceptions/IncorrectPasswordException");
+const VerificationOtp = require("../models/VerificationOtp");
 const UserNotFoundException = require("../exceptions/UserNotFoundException");
-const {createNewContact} = require("../service/contactService");
+const PhoneAlreadyExistsException = require("../exceptions/PhoneAlreadyExistsException");
+const ContactNotFoundException = require("../exceptions/ContactNotFoundException");
 
 describe("Contacts Service Test", () => {
 
@@ -17,22 +17,21 @@ describe("Contacts Service Test", () => {
         await sq.close();
     });
 
-    describe("Create contact tes", () => {
-        const random = getRandomValue();
-        const signupDto = {
-            email: `test-${random}@example.com`,
-            password: 'password',
-            username: `Test-User-${random}`
-        };
-        const res = await createNewUser(signupDto);
-        const createContactRequest = {
-            firstname: `${random}`,
-            lastname: `John ${random}`,
-            phoneNumber: '08103078881',
-            userId: res.id;
-        }
-
+    describe("Create contact test", () => {
         it('Should create a new contact', async () => {
+            const random = getRandomValue();
+            const signupDto = {
+                email: `test-${random}@example.com`,
+                password: 'password',
+                username: `Test-User-${random}`
+            };
+            const res = await createNewUser(signupDto);
+            const createContactRequest = {
+                firstname: `${random}`,
+                lastname: `John ${random}`,
+                phoneNumber: '08103078881',
+                userId: res.id
+            }
             const contact = await createNewContact(createContactRequest)
             expect(contact.firstname).toEqual(createContactRequest.firstname);
             expect(contact.lastname).toEqual(createContactRequest.lastname);
@@ -40,82 +39,175 @@ describe("Contacts Service Test", () => {
         });
 
         it('Should not create a new contact with the same phone number', async () => {
+            const random = getRandomValue();
+            const signupDto = {
+                email: `test-${random}@example.com`,
+                password: 'password',
+                username: `Test-User-${random}`
+            };
+            const res = await createNewUser(signupDto);
+            const createContactRequest = {
+                firstname: `${random}`,
+                lastname: `John ${random}`,
+                phoneNumber: '08103078881',
+                userId: res.id
+            }
+            await createNewContact(createContactRequest); // creates contact the first time
             expect.assertions(3);
             try {
                 await createNewContact(createContactRequest)
             } catch (error) {
-                expect(error).toBeInstanceOf(PhoneNumberAlreadyExistsException);
-                expect(error.message).toBe('This email is already registered!');
+                expect(error).toBeInstanceOf(PhoneAlreadyExistsException);
+                expect(error.message).toBe('You already have this phone number saved!');
                 expect(error.statusCode).toBe(400);
             }
         });
 
-        it('Should not create a new user with the same username', async () => {
-            expect.assertions(3);
-            signupDto.email = `test-${random}-2@example.com`;
+        it('Should not create a contact without a valid user', async () => {
+            const random = getRandomValue();
+            const signupDto = {
+                email: `test-${random}@example.com`,
+                password: 'password',
+                username: `Test-User-${random}`
+            };
+            const res = await createNewUser(signupDto);
+            const createContactRequest = {
+                firstname: `${random}`,
+                lastname: `John ${random}`,
+                phoneNumber: '08103078881',
+                userId: res.id
+            }
+            createContactRequest.userId = 210;
             try {
-                await createNewUser(signupDto);
+                await createNewContact(createContactRequest)
             } catch (error) {
-                expect(error).toBeInstanceOf(UsernameAlreadyExistsException);
-                expect(error.message).toBe('This username is already taken!');
-                expect(error.statusCode).toBe(400);
+                expect(error).toBeInstanceOf(UserNotFoundException);
+                expect(error.message).toBe('User does not exist!');
+                expect(error.statusCode).toBe(404);
             }
         });
 
     });
 
 
-    describe("User Login", () => {
-        const random = getRandomValue();
-        it('User should be able to login', async () => {
+    describe("Update Contact",  () => {
+        it('Should update the existing contact', async () => {
+            const random = getRandomValue();
             const signupDto = {
                 email: `test-${random}@example.com`,
                 password: 'password',
                 username: `Test-User-${random}`
             };
-            await createNewUser(signupDto);
-            const loginRequest = {
-                email: signupDto.email,
-                password: signupDto.password,
-            };
-            const token = await loginUser(loginRequest);
-            expect(token).toBeDefined();
+            const res = await createNewUser(signupDto);
+            const createContactRequest = {
+                firstname: `${random}`,
+                lastname: `John ${random}`,
+                phoneNumber: '08103078881',
+                userId: res.id
+            }
+            const contact = await createNewContact(createContactRequest)
+            const updateContactRequest = {
+                firstname: `${random}`,
+                lastname: `John ${random}`,
+                phoneNumber: '08103078882',
+                id: contact.id
+            }
+            const updatedContact = await updateAContact(updateContactRequest, res.id);
+            expect(updatedContact.firstname).toEqual(updateContactRequest.firstname);
+            expect(updatedContact.lastname).toEqual(updateContactRequest.lastname);
+            expect(updatedContact.phoneNumber).toEqual(updateContactRequest.phoneNumber);
         });
 
-        it('User should not be able to login with the wrong password', async () => {
+    });
 
-            const loginRequest = {
+    describe("Find Contact",  () => {
+        it('Should get an existing contact', async () => {
+            const random = getRandomValue();
+            const signupDto = {
                 email: `test-${random}@example.com`,
-                password: 'password-01',
+                password: 'password',
+                username: `Test-User-${random}`
             };
+            const res = await createNewUser(signupDto);
+            const createContactRequest = {
+                firstname: `${random}`,
+                lastname: `John ${random}`,
+                phoneNumber: '08103078881',
+                userId: res.id
+            }
+            const contact = await createNewContact(createContactRequest)
+            const foundContact = await retrieveASingleContact(contact.id, res.id);
+            expect(foundContact.firstname).toEqual(contact.firstname);
+            expect(foundContact.lastname).toEqual(contact.lastname);
+            expect(foundContact.phoneNumber).toEqual(contact.phoneNumber);
+        });
 
+        it('Should throw error for non-existing contact', async () => {
+            const random = getRandomValue();
+            const signupDto = {
+                email: `test-${random}@example.com`,
+                password: 'password',
+                username: `Test-User-${random}`
+            };
+            const res = await createNewUser(signupDto);
             expect.assertions(3);
             try {
-                await loginUser(loginRequest);
+                await retrieveASingleContact(123, res.id)
             } catch (error) {
-                expect(error).toBeInstanceOf(IncorrectPasswordException);
-                expect(error.message).toBe('Incorrect Password!');
-                expect(error.statusCode).toBe(401);
+                expect(error).toBeInstanceOf(ContactNotFoundException);
+                expect(error.message).toBe('Contact not found!');
+                expect(error.statusCode).toBe(404);
             }
         });
+    });
 
-        it('Non existent user should not be able to login', async () => {
-            const loginRequest = {
-                email: 'fake@example.com',
+    describe("Delete Contact",  () => {
+        it('Should delete an existing contact', async () => {
+            const random = getRandomValue();
+            const signupDto = {
+                email: `test-${random}@example.com`,
                 password: 'password',
+                username: `Test-User-${random}`
             };
+            const res = await createNewUser(signupDto);
+            const createContactRequest = {
+                firstname: `${random}`,
+                lastname: `John ${random}`,
+                phoneNumber: '08103078881',
+                userId: res.id
+            }
+            expect.assertions(4);
+            const contact = await createNewContact(createContactRequest)
+            const result = await deleteAContact(contact.id, res.id);
+            expect(result).toEqual('SUCCESSFUL');
 
-            expect.assertions(3);
-
+            // should not find contact after it has been deleted
             try {
-                await loginUser(loginRequest);
+                await retrieveASingleContact(123, res.id)
             } catch (error) {
-                expect(error).toBeInstanceOf(UserNotFoundException);
-                expect(error.message).toBe('User not found!');
+                expect(error).toBeInstanceOf(ContactNotFoundException);
+                expect(error.message).toBe('Contact not found!');
                 expect(error.statusCode).toBe(404);
             }
         });
 
+        it('Should throw error for non-existing contact', async () => {
+            const random = getRandomValue();
+            const signupDto = {
+                email: `test-${random}@example.com`,
+                password: 'password',
+                username: `Test-User-${random}`
+            };
+            const res = await createNewUser(signupDto);
+            expect.assertions(3);
+            try {
+                await deleteAContact(123, res.id)
+            } catch (error) {
+                expect(error).toBeInstanceOf(ContactNotFoundException);
+                expect(error.message).toBe('Contact not found!');
+                expect(error.statusCode).toBe(404);
+            }
+        });
     });
 
 });
