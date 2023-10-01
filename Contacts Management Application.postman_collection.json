@@ -21,7 +21,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"lortiyopso@gufum.com\",\r\n    \"password\": \"password\",\r\n    \"username\": \"Test User 2\"\r\n}\r\n",
+							"raw": "{\r\n    \"email\": \"lortiyopso@gufum.com\",\r\n    \"password\": \"password\",\r\n    \"username\": \"Test User 2004\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -288,15 +288,6 @@
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
 								"url": "{{base-url}}/auth/verify/nclQtkSqOZRR"
 							},
 							"status": "OK",
@@ -340,15 +331,6 @@
 							"originalRequest": {
 								"method": "POST",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
 								"url": "{{base-url}}/auth/verify/nclQtkSqOZRR"
 							},
 							"status": "Unauthorized",
@@ -391,21 +373,9 @@
 				},
 				{
 					"name": "Get Current User",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": "{{base-url}}/auth/current-user"
 					},
 					"response": [
@@ -414,15 +384,6 @@
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
 								"url": "{{base-url}}/auth/current-user"
 							},
 							"status": "OK",
@@ -439,15 +400,15 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "105"
+									"value": "31"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"69-ZhLDIueaxMv6k1kbnShJjt70eqw\""
+									"value": "W/\"1f-bPQUKPBTVVhCTNS6b2YIS1MOMFg\""
 								},
 								{
 									"key": "Date",
-									"value": "Sat, 30 Sep 2023 22:50:34 GMT"
+									"value": "Sun, 01 Oct 2023 14:25:54 GMT"
 								},
 								{
 									"key": "Connection",
@@ -459,7 +420,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"currentUser\": {\n        \"id\": 4,\n        \"username\": \"Test User\",\n        \"createdAt\": \"2023-09-30T22:27:47.487Z\",\n        \"isVerified\": false\n    }\n}"
+							"body": "{\n    \"id\": 4,\n    \"username\": \"Test User\"\n}"
 						}
 					]
 				}
