@@ -26,7 +26,7 @@ contactRouter.post('/create', async (req, res, next) => {
             lastname: createdContact.lastname,
             phoneNumber: createdContact.phoneNumber
         }
-        res.status(201).json({ message: 'Contact created successfully', createdContact: createContactResponse });
+        res.status(201).json(createContactResponse);
     } catch (error) {
         next(error);
     }
