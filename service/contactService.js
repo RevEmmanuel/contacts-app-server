@@ -3,16 +3,22 @@ const PhoneAlreadyExistsException = require("../exceptions/PhoneAlreadyExistsExc
 const {sq} = require("../utils/database");
 const Contact = require("../models/Contact")
 const User = require("../models/User");
+const {checkIfUserExists} = require("./authService");
+const UserNotFoundException = require("../exceptions/UserNotFoundException");
 
 async function createNewContact(contactRequest) {
     const firstname = contactRequest.firstname;
     const lastname = contactRequest.lastname;
     const phoneNumber = contactRequest.phoneNumber;
     const userId = contactRequest.userId;
-    const phoneNumberPattern = '^(\\+234|234|0)(701|702|703|704|705|706|707|708|709|802|803|804|805|806|807|808|809|810|811|812|813|814|815|816|817|818|819|909|908|901|902|903|904|905|906|907)([0-9]{7})$'
     const contact = await sq.models.Contact.findOne( { where: { phoneNumber: phoneNumber, userId: userId } } );
     if (contact) {
         throw new PhoneAlreadyExistsException('You already have this phone number saved!');
+    }
+
+    const userExists = await checkIfUserExists(userId);
+    if (!userExists) {
+        throw new UserNotFoundException('User does not exist!');
     }
 
     return await sq.models.Contact.create(
@@ -27,6 +33,10 @@ async function createNewContact(contactRequest) {
 
 
 async function findAllContactsForAUser(userId) {
+    const userExists = await checkIfUserExists(userId);
+    if (!userExists) {
+        throw new UserNotFoundException('User does not exist!');
+    }
     return await sq.models.Contact.findAndCountAll({
         where: {
             userId: userId,
@@ -35,6 +45,10 @@ async function findAllContactsForAUser(userId) {
 }
 
 async function retrieveASingleContact(contactId, userId) {
+    const userExists = await checkIfUserExists(userId);
+    if (!userExists) {
+        throw new UserNotFoundException('User does not exist!');
+    }
     const contact = await sq.models.Contact.findOne({
         where: {
             id: contactId,

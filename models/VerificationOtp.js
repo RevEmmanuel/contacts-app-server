@@ -33,7 +33,7 @@ sq.sync()
         console.log('Otp model synced with the database');
     })
     .catch((error) => {
-        console.error('Error syncing User model:', error);
+        console.error('Error syncing otp model:', error);
     });
 
 module.exports = VerificationOtp;
