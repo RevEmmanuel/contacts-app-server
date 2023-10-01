@@ -22,6 +22,7 @@ const authVerification = async (req, res, next) => {
                 throw new UnauthorizedException('Invalid or expired token');
             }
             req.user = decoded.user;
+            console.log(decoded);
             next();
         });
     } catch (error) {

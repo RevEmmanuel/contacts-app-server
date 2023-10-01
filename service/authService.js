@@ -67,7 +67,7 @@ async function createNewUser(signupRequest) {
         }
     });
     const secretKey = process.env.JWT_SECRET;
-    newUser['token'] = jwt.sign({user: user}, secretKey, {expiresIn: '24h'});
+    newUser['token'] = jwt.sign({ user: newUser }, secretKey, {expiresIn: '24h'});
     return newUser;
 }
 

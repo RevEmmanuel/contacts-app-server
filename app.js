@@ -32,6 +32,7 @@ app.use('/auth', authRouter);
 app.get('/auth/current-user', authVerification ,async (req, res, next) => {
     try {
         const user = req.user;
+        console.log(user);
         const currentUser = {
             id: user.id,
             username: user.username
