@@ -15,7 +15,7 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 const corsOptions = {
-    origin: ['*'],
+    origin: ['http://localhost:3000', 'https://hux-assessment-frontend.vercel.app', 'https://hux-assessment-frontend.vercel.app/'],
     optionsSuccessStatus: 200,
     methods: "GET, POST, PUT, DELETE",
 }
